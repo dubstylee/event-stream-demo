@@ -73,7 +73,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
 
 **Purpose:** Implement the producer singleton with produce method and retry logic
 
-- [ ] **Task 3.1:** Create producer singleton
+- [x] **Task 3.1:** Create producer singleton
 
   - Import `getClient()` from client.js
   - Create singleton producer instance variable (initially null)
@@ -82,7 +82,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Configure producer with `maxInFlightRequests: 5`
   - Call `producer.connect()` on initialization
 
-- [ ] **Task 3.2:** Implement produce function with JSON serialization
+- [x] **Task 3.2:** Implement produce function with JSON serialization
 
   - Create `produce(topic, message)` async function
   - Validate topic is non-empty string
@@ -91,7 +91,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Call `producer.send({ topic, messages: [{ value: serialized }] })`
   - Return Promise that resolves on success
 
-- [ ] **Task 3.3:** Add automatic retry logic
+- [x] **Task 3.3:** Add automatic retry logic
 
   - Wrap `producer.send()` in try-catch block
   - Implement retry loop with max 3 attempts
@@ -100,7 +100,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Log each retry attempt to console.error
   - After 3 failed retries, throw error to caller
 
-- [ ] **Task 3.4:** Implement producer disconnect
+- [x] **Task 3.4:** Implement producer disconnect
 
   - Create `disconnectProducer()` async function
   - Flush pending messages using `producer.disconnect()`
@@ -108,14 +108,14 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Handle disconnect errors gracefully
   - Log disconnect completion
 
-- [ ] **Task 3.5:** Add JSDoc comments and error messages
+- [x] **Task 3.5:** Add JSDoc comments and error messages
 
   - Add JSDoc comments for `produce()` function signature
   - Document parameters: topic (string), message (object)
   - Document return value: Promise<void>
   - Include descriptive error messages with context (topic, operation)
 
-- [ ] **Task 3.6:** Write unit tests for producer.js
+- [x] **Task 3.6:** Write unit tests for producer.js
   - Create `src/kafka/__tests__/producer.test.js`
   - Mock client.js and kafkajs modules
   - Test produce function with valid message
@@ -130,14 +130,14 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
 
 **Purpose:** Implement consumers with event emission and DLQ handling
 
-- [ ] **Task 4.1:** Create EventEmitter and define topics
+- [x] **Task 4.1:** Create EventEmitter and define topics
 
   - Import EventEmitter from Node.js events module
   - Create and export single EventEmitter instance
   - Define array of all four topics: order-created, product-needs-review, product-matched, import-requested
   - Export topics array for use in tests
 
-- [ ] **Task 4.2:** Implement consumer initialization for all topics
+- [x] **Task 4.2:** Implement consumer initialization for all topics
 
   - Import `getClient()` from client.js
   - Create array to store all consumer instances
@@ -147,7 +147,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Configure consumers with `sessionTimeout: 30000` and `heartbeatInterval: 3000`
   - Store each consumer instance in array
 
-- [ ] **Task 4.3:** Implement message processing with event emission
+- [x] **Task 4.3:** Implement message processing with event emission
 
   - For each consumer, call `consumer.subscribe({ topic })`
   - Call `consumer.run({ eachMessage })` to start processing
@@ -157,7 +157,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Emit `kafka:message` event with payload
   - Emit `kafka:connected` event after all consumers are running
 
-- [ ] **Task 4.4:** Add message processing retry logic
+- [x] **Task 4.4:** Add message processing retry logic
 
   - Create in-memory Map to track processing attempts per message
   - Use message offset as key for attempt tracking
@@ -166,7 +166,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - If attempts < 3, log error and continue (Kafka will redeliver)
   - If attempts >= 3, send message to DLQ
 
-- [ ] **Task 4.5:** Implement Dead Letter Queue (DLQ) handling
+- [x] **Task 4.5:** Implement Dead Letter Queue (DLQ) handling
 
   - Import `produce()` function from producer.js
   - Create DLQ topic name format: `${originalTopic}-dlq`
@@ -176,7 +176,7 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Clear attempt count from Map after sending to DLQ
   - DLQ topics auto-created by Kafka on first produce
 
-- [ ] **Task 4.6:** Implement consumer disconnect
+- [x] **Task 4.6:** Implement consumer disconnect
 
   - Create `disconnectConsumers()` async function
   - For each consumer, call `consumer.disconnect()` to commit offsets
@@ -184,14 +184,14 @@ This tasks list breaks down the Kafka Producer and Consumer Infrastructure spec 
   - Handle disconnect errors gracefully
   - Emit `kafka:disconnected` event after all consumers disconnected
 
-- [ ] **Task 4.7:** Add connection lifecycle event emission
+- [x] **Task 4.7:** Add connection lifecycle event emission
 
   - Emit `kafka:connected` event when all consumers successfully running
   - Emit `kafka:disconnected` event when connection lost
   - Emit `kafka:error` event with error details on connection errors
   - Update client connection status on each event
 
-- [ ] **Task 4.8:** Write unit tests for consumer.js
+- [x] **Task 4.8:** Write unit tests for consumer.js
   - Create `src/kafka/__tests__/consumer.test.js`
   - Mock client.js, producer.js, and kafkajs modules
   - Test consumer initialization for all four topics

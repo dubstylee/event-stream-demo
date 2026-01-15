@@ -1,0 +1,13 @@
+{
+  "port": 4000,
+  "cors": {
+    "origins": ["http://localhost:*"],
+    "credentials": false
+  },
+  "kafka": {
+    "initTimeout": 60000
+  },
+  "shutdown": {
+    "timeout": 5000
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "brokers": ["localhost:9092"],
+  "clientId": "event-stream-demo",
+  "retry": {
+    "maxRetries": 3,
+    "initialRetryTime": 100,
+    "maxRetryTime": 30000
+  },
+  "connectionTimeout": 10000,
+  "requestTimeout": 30000
+}

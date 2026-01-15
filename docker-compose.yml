@@ -1,0 +1,104 @@
+# Docker Compose configuration for Kafka Event Stream PoC
+# Provides local development infrastructure with Kafka and Zookeeper services
+# Usage:
+#   Start services: docker compose up -d
+#   Stop services:  docker compose down
+#   View logs:      docker compose logs -f
+
+# Network Configuration
+# Dedicated bridge network for Kafka ecosystem service discovery
+networks:
+  kafka-net:
+    driver: bridge
+
+services:
+  # Zookeeper Service
+  # Coordination service required by Kafka for cluster management
+  # Port 2181 remains internal to the Docker network for security
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    networks:
+      - kafka-net
+    environment:
+      # Zookeeper client port configuration
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      # Enable four-letter commands for health checks (ruok)
+      KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=*"
+    healthcheck:
+      # Zookeeper responds with "imok" when healthy
+      test: ["CMD-SHELL", "echo ruok | nc localhost 2181 | grep imok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Kafka Service
+  # Single-broker message streaming platform for event-driven architecture
+  # Accessible from host on port 9092 for KafkaJS client connections
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    networks:
+      - kafka-net
+    ports:
+      # Expose Kafka to host for local development client connections
+      - "9092:9092"
+    depends_on:
+      zookeeper:
+        # Wait for Zookeeper to be healthy before starting Kafka
+        condition: service_healthy
+    environment:
+      # Broker ID for single-broker setup
+      KAFKA_BROKER_ID: 1
+      # Zookeeper connection for cluster coordination
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # Listener security protocol mapping
+      # INTERNAL: for container-to-container communication
+      # EXTERNAL: for host machine access
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      # Define listeners on both internal and external interfaces
+      KAFKA_LISTENERS: INTERNAL://:9093,EXTERNAL://:9092
+      # Advertised listeners for client discovery
+      # Host clients connect via localhost:9092, containers use kafka:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9093,EXTERNAL://localhost:9092
+      # Use internal listener for broker-to-broker communication
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      # Enable automatic topic creation when producers/consumers connect
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      # Offsets topic configuration for single-broker setup
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    healthcheck:
+      # Verify Kafka broker is operational and responding to API requests
+      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Topic Creator Service
+  # Creates the required topics on startup, then exits
+  kafka-init:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka-init
+    networks:
+      - kafka-net
+    depends_on:
+      kafka:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "-c"]
+    command: |
+      "
+      echo 'Waiting for Kafka to be ready...'
+      # Create all four topics required for the PoC
+      kafka-topics --bootstrap-server kafka:9093 --create --if-not-exists --topic order-created --partitions 1 --replication-factor 1
+      kafka-topics --bootstrap-server kafka:9093 --create --if-not-exists --topic product-needs-review --partitions 1 --replication-factor 1
+      kafka-topics --bootstrap-server kafka:9093 --create --if-not-exists --topic product-matched --partitions 1 --replication-factor 1
+      kafka-topics --bootstrap-server kafka:9093 --create --if-not-exists --topic import-requested --partitions 1 --replication-factor 1
+      echo 'Topics created successfully:'
+      kafka-topics --bootstrap-server kafka:9093 --list
+      "
+    restart: "no"

@@ -45,21 +45,21 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
 #### Task Group 2: Socket.io Connection Management
 **Dependencies:** Task Group 1
 
-- [ ] 2.0 Complete Socket.io connection layer
-  - [ ] 2.1 Create useSocket custom hook
+- [x] 2.0 Complete Socket.io connection layer
+  - [x] 2.1 Create useSocket custom hook
     - Location: `src/hooks/useSocket.js`
     - Auto-connect to localhost:4000 on mount
     - Manage connection state: connecting, connected, disconnected, error
     - Clean up connection on unmount
     - Return connection status and socket instance
-  - [ ] 2.2 Create useKafkaMessages custom hook
+  - [x] 2.2 Create useKafkaMessages custom hook
     - Location: `src/hooks/useKafkaMessages.js`
     - Accept socket instance as parameter
     - Listen for `kafka:message` events
     - Maintain separate message arrays for each of the four topics
     - Track message counts per topic
     - Limit stored messages to 10 per topic (newest at end)
-  - [ ] 2.3 Verify Socket.io connection works
+  - [x] 2.3 Verify Socket.io connection works
     - Start Express server on port 4000
     - Start Vite dev server
     - Confirm connection established in browser console
@@ -76,8 +76,8 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
 #### Task Group 3: Connection Status Indicator
 **Dependencies:** Task Group 2
 
-- [ ] 3.0 Complete ConnectionStatus component
-  - [ ] 3.1 Create ConnectionStatus component
+- [x] 3.0 Complete ConnectionStatus component
+  - [x] 3.1 Create ConnectionStatus component
     - Location: `src/components/ConnectionStatus.jsx`
     - Accept connectionStatus prop (connecting, connected, disconnected, error)
     - Display color-coded indicator:
@@ -85,7 +85,7 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
       - Yellow for connecting
       - Red for disconnected/error
     - Show status text alongside indicator
-  - [ ] 3.2 Style with Tailwind CSS
+  - [x] 3.2 Style with Tailwind CSS
     - Use Tailwind utility classes for colors and layout
     - Ensure sufficient color contrast (4.5:1 minimum)
     - Make indicator visually prominent

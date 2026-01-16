@@ -297,10 +297,55 @@ async function startServer() {
   }
 }
 
-// Graceful shutdown handler (will be implemented fully in Group 6)
+/**
+ * Graceful shutdown handler
+ * GROUP 6: Server Startup and Lifecycle
+ */
 const shutdown = async () => {
   console.log("Shutting down gracefully...");
-  process.exit(0);
+
+  try {
+    // Create timeout for shutdown process
+    const shutdownTimeout = setTimeout(() => {
+      console.warn("Shutdown timeout reached, forcing exit");
+      process.exit(0);
+    }, config.shutdown.timeout);
+
+    // Shutdown sequence
+    if (global.server) {
+      // 1. Close HTTP server (stop accepting new connections)
+      await new Promise((resolve) => {
+        global.server.close(() => {
+          console.log("HTTP server closed");
+          resolve();
+        });
+      });
+
+      // 2. Emit disconnect event to all Socket.io clients
+      if (global.io) {
+        global.io.emit("disconnect");
+        console.log("Disconnect event sent to all clients");
+
+        // 3. Close Socket.io connections
+        global.io.close(() => {
+          console.log("Socket.io connections closed");
+        });
+      }
+    }
+
+    // 4. Disconnect from Kafka
+    await disconnectKafka();
+    console.log("Kafka disconnected");
+
+    // Clear timeout if we completed successfully
+    clearTimeout(shutdownTimeout);
+
+    console.log("Shutdown complete");
+    process.exit(0);
+  } catch (error) {
+    console.error("Error during shutdown:", error.message);
+    process.exit(1);
+  }
 };
 
 process.on("SIGINT", shutdown);

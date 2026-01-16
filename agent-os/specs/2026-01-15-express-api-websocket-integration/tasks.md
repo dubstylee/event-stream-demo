@@ -142,7 +142,7 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
 
 **Purpose:** Implement server startup, logging, and graceful shutdown
 
-- [ ] **Task 6.1:** Implement server startup sequence
+- [x] **Task 6.1:** Implement server startup sequence
   - Log "Starting server..." at beginning
   - Log loaded configuration (port, timeouts)
   - Wait for Kafka initialization (Task 5.3)
@@ -151,7 +151,7 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
   - Count connected Socket.io clients: `io.sockets.sockets.size`
   - Log "Server ready - {count} clients connected"
 
-- [ ] **Task 6.2:** Implement graceful shutdown handler
+- [x] **Task 6.2:** Implement graceful shutdown handler
   - Register `process.on('SIGINT', handler)` for Ctrl+C
   - Register `process.on('SIGTERM', handler)` for termination
   - Log "Shutting down gracefully..." when signal received
@@ -164,13 +164,13 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
   - Log each shutdown step completion
   - Log "Shutdown complete" and exit with code 0
 
-- [ ] **Task 6.3:** Implement startup error handling
+- [x] **Task 6.3:** Implement startup error handling
   - Wrap server startup in try-catch
   - Log any startup errors to console.error
   - Exit with code 1 on startup failure
   - Include error details in log message
 
-- [ ] **Task 6.4:** Add logging for Socket.io client tracking
+- [x] **Task 6.4:** Add logging for Socket.io client tracking
   - On connection, log with client ID
   - On disconnection, log with client ID
   - On subscribe/unsubscribe, log with client ID and topic
@@ -180,7 +180,7 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
 
 **Purpose:** Create comprehensive unit tests for the server
 
-- [ ] **Task 7.1:** Set up test file and mocks
+- [x] **Task 7.1:** Set up test file and mocks
   - Create `src/__tests__/app.test.js`
   - Mock Kafka module using `vi.mock('../kafka/index.js')`
   - Create mock implementations:
@@ -191,50 +191,50 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
     - `disconnect`: returns resolved Promise
   - Set up beforeEach and afterEach hooks
 
-- [ ] **Task 7.2:** Test health check endpoint
+- [x] **Task 7.2:** Test health check endpoint
   - Test `GET /api/health` returns 200 status
   - Verify response body is `{status: "ok"}`
   - Ensure response is JSON format
 
-- [ ] **Task 7.3:** Test Kafka status endpoint
+- [x] **Task 7.3:** Test Kafka status endpoint
   - Test `GET /api/kafka/status` returns 200 status
   - Verify `getConnectionStatus()` is called
   - Verify response matches mocked Kafka status
   - Test with different status values (connected, error, etc.)
 
-- [ ] **Task 7.4:** Test produce endpoint with valid payload
+- [x] **Task 7.4:** Test produce endpoint with valid payload
   - Test `POST /api/kafka/produce` with valid `{topic, message}`
   - Verify `produce(topic, message)` is called with correct args
   - Verify response is `{success: true}` with status 200
   - Test with different topics and messages
 
-- [ ] **Task 7.5:** Test produce endpoint validation errors
+- [x] **Task 7.5:** Test produce endpoint validation errors
   - Test with missing `topic` field returns 400
   - Test with empty `topic` string returns 400
   - Test with missing `message` field returns 400
   - Test with null `message` returns 400
   - Verify error response format `{error, code}`
 
-- [ ] **Task 7.6:** Test produce endpoint Kafka errors
+- [x] **Task 7.6:** Test produce endpoint Kafka errors
   - Mock `produce()` to throw error
   - Verify response status is 503
   - Verify error response format `{error, code}`
   - Verify error code is appropriate
 
-- [ ] **Task 7.7:** Test Kafka-to-Socket.io bridge
+- [x] **Task 7.7:** Test Kafka-to-Socket.io bridge
   - Invoke mocked `onMessage` callback with test message
   - Verify Socket.io emit called with correct parameters
   - Verify emitted to correct room (topic name)
   - Verify timestamp added to payload
   - Verify payload structure matches spec
 
-- [ ] **Task 7.8:** Test Socket.io connection handling (if feasible)
+- [x] **Task 7.8:** Test Socket.io connection handling (if feasible)
   - Test client auto-joins all topic rooms on connection
   - Test subscribe:topic adds client to room
   - Test unsubscribe:topic removes client from room
   - Test invalid topic validation
 
-- [ ] **Task 7.9:** Run all tests and verify coverage
+- [x] **Task 7.9:** Run all tests and verify coverage
   - Execute `bun test src/__tests__/app.test.js`
   - Verify all tests pass
   - Review test coverage for main code paths
@@ -244,20 +244,20 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
 
 **Purpose:** Ensure code quality, add comments, and create documentation
 
-- [ ] **Task 8.1:** Add JSDoc comments
+- [x] **Task 8.1:** Add JSDoc comments
   - Add JSDoc for main server initialization function
   - Add JSDoc for all route handlers (health, status, produce)
   - Add JSDoc for Socket.io event handlers
   - Add JSDoc for Kafka message bridge handler
   - Document parameters and return types
 
-- [ ] **Task 8.2:** Add inline comments for complex logic
+- [x] **Task 8.2:** Add inline comments for complex logic
   - Comment Kafka initialization timeout logic
   - Comment graceful shutdown sequence
   - Comment Socket.io room management
   - Comment error response formatting
 
-- [ ] **Task 8.3:** Create server README
+- [x] **Task 8.3:** Create server README
   - Create `src/server/README.md` or add to main README
   - Document server endpoints (health, status, produce)
   - Document Socket.io events (subscribe, unsubscribe, kafka:message)
@@ -265,7 +265,7 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
   - Include example usage for API endpoints
   - Include Socket.io client connection example
 
-- [ ] **Task 8.4:** Code quality review
+- [x] **Task 8.4:** Code quality review
   - Review all files for consistent formatting
   - Ensure proper error handling in all routes
   - Verify all imports are correct
@@ -276,31 +276,31 @@ This tasks list breaks down the Express API with WebSocket Integration spec into
 
 **Purpose:** Manually test the server with real dependencies
 
-- [ ] **Task 9.1:** Start dependencies
+- [x] **Task 9.1:** Start dependencies
   - Ensure Docker Compose is running (`docker-compose up -d`)
   - Verify Kafka is accessible on localhost:9092
   - Verify Kafka topics exist
 
-- [ ] **Task 9.2:** Start Express server
+- [x] **Task 9.2:** Start Express server
   - Run `bun run src/app.js` (or appropriate script)
   - Verify server starts on port 4000
   - Verify "Kafka consumers ready" log appears
   - Verify "Server ready" log appears
 
-- [ ] **Task 9.3:** Test HTTP endpoints manually
+- [x] **Task 9.3:** Test HTTP endpoints manually
   - Test `GET http://localhost:4000/api/health` with curl or browser
   - Test `GET http://localhost:4000/api/kafka/status`
   - Test `POST http://localhost:4000/api/kafka/produce` with valid payload
   - Verify responses match expected format
 
-- [ ] **Task 9.4:** Test Socket.io connection (if tool available)
+- [x] **Task 9.4:** Test Socket.io connection (if tool available)
   - Use Socket.io client or testing tool
   - Connect to `http://localhost:4000`
   - Verify connection succeeds
   - Test subscribe:topic event
   - Verify kafka:message events received when Kafka messages produced
 
-- [ ] **Task 9.5:** Test graceful shutdown
+- [x] **Task 9.5:** Test graceful shutdown
   - Start server
   - Send SIGINT (Ctrl+C)
   - Verify shutdown sequence logs appear

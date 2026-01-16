@@ -121,15 +121,15 @@ This feature implements the final step of the order processing workflow by consu
 #### Task Group 4: Integration Tests
 **Dependencies:** Task Groups 1-3
 
-- [ ] 4.0 Complete integration testing
-  - [ ] 4.1 Write 2 end-to-end integration tests
+- [x] 4.0 Complete integration testing
+  - [x] 4.1 Write 2 end-to-end integration tests
     - Test complete order flow: order-created → products generated → product-matched → import-requested published
     - Test order with mixed products (some needing review, some automatic): verify completion only after all matched
-  - [ ] 4.2 Run all feature-specific tests
+  - [x] 4.2 Run all feature-specific tests
     - Run all tests from groups 1-3 plus new tests from 4.1
     - Expected total: 12 tests (3 + 5 + 2 + 2)
     - Verify all tests pass
-  - [ ] 4.3 Run full backend test suite
+  - [x] 4.3 Run full backend test suite
     - Run `bun test` for entire src/ directory
     - Ensure no regressions in existing tests
     - Verify all tests still pass with new changes

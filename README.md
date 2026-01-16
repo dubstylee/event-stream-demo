@@ -115,12 +115,12 @@ The frontend will open at `http://localhost:5173` (default Vite port).
 
 ## Kafka Topics
 
-| Topic Name | Purpose |
-|------------|---------|
-| `order-created` | User creates a new order with orderId and productCount |
+| Topic Name             | Purpose                                                  |
+|------------------------|----------------------------------------------------------|
+| `order-created`        | User creates a new order with orderId and productCount   |
 | `product-needs-review` | Products randomly requiring manual approval (30% chance) |
-| `product-matched` | User approves a product from the review queue |
-| `import-requested` | Fires when all products for an order are processed |
+| `product-matched`      | User approves a product from the review queue            |
+| `import-requested`     | Fires when all products for an order are processed       |
 
 ## Project Structure
 

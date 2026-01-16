@@ -8,8 +8,8 @@ import { useToast } from "./ToastContainer";
 
 /**
  * Dashboard provides the main application layout with real-time Kafka message display.
- * Features a two-column responsive layout with order entry form on the left
- * and four topic widgets stacked vertically on the right.
+ * Features order entry form and products needing review side by side on top,
+ * with topic widgets in a grid row below.
  */
 function Dashboard() {
   const { connectionStatus, socket } = useSocket();
@@ -28,28 +28,36 @@ function Dashboard() {
       </header>
 
       <div className="mx-auto max-w-7xl px-4 py-6 md:px-6">
-        <div className="flex flex-col gap-6 md:flex-row">
-          <section
-            className="w-full md:w-2/5"
-            aria-labelledby="order-section-heading"
-          >
-            <h2 id="order-section-heading" className="sr-only">
-              Order Entry
-            </h2>
-            <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
+          {/* Top Row: Order Entry and Products Needing Review side by side */}
+          <div className="flex flex-col gap-6 lg:flex-row">
+            <section
+              className="w-full lg:w-1/2"
+              aria-labelledby="order-section-heading"
+            >
+              <h2 id="order-section-heading" className="sr-only">
+                Order Entry
+              </h2>
               <OrderEntryForm />
-              <ProductsNeedingReview socket={socket} />
-            </div>
-          </section>
+            </section>
 
-          <section
-            className="w-full md:w-3/5"
-            aria-labelledby="topics-section-heading"
-          >
+            <section
+              className="w-full lg:w-1/2"
+              aria-labelledby="review-section-heading"
+            >
+              <h2 id="review-section-heading" className="sr-only">
+                Products Needing Review
+              </h2>
+              <ProductsNeedingReview socket={socket} />
+            </section>
+          </div>
+
+          {/* Bottom Row: Topic Widgets in a grid */}
+          <section aria-labelledby="topics-section-heading">
             <h2 id="topics-section-heading" className="sr-only">
               Kafka Topics
             </h2>
-            <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
               {TOPICS.map((topic) => (
                 <TopicWidget
                   key={topic}

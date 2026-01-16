@@ -14,22 +14,22 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
 #### Task Group 1: Vite + React + Tailwind Configuration
 **Dependencies:** None
 
-- [ ] 1.0 Complete Vite project setup with Tailwind CSS
-  - [ ] 1.1 Initialize Vite React project
+- [x] 1.0 Complete Vite project setup with Tailwind CSS
+  - [x] 1.1 Initialize Vite React project
     - Create project in `/Users/brian/event-stream-demo/client` directory
     - Use Vite with React template
     - Configure for JavaScript (not TypeScript per existing project patterns)
-  - [ ] 1.2 Install and configure Tailwind CSS with PostCSS
+  - [x] 1.2 Install and configure Tailwind CSS with PostCSS
     - Install tailwindcss, postcss, autoprefixer
     - Create tailwind.config.js with content paths
     - Create postcss.config.js
     - Add Tailwind directives to main CSS file
-  - [ ] 1.3 Install socket.io-client dependency
+  - [x] 1.3 Install socket.io-client dependency
     - Add socket.io-client to package.json
-  - [ ] 1.4 Configure development server
+  - [x] 1.4 Configure development server
     - Set dev server port (e.g., 5173 or 3000)
     - Verify CORS compatibility with Express server on port 4000
-  - [ ] 1.5 Verify project runs successfully
+  - [x] 1.5 Verify project runs successfully
     - Run `npm run dev` or `bun dev`
     - Confirm Tailwind styles are applied
     - Confirm no console errors

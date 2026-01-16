@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 import { getClient, setConnected, setConnectionError } from './client.js';
 import { produce } from './producer.js';
+import { handleOrderCreated } from './order-handler.js';
 
 /**
  * Event emitter for Kafka events
@@ -95,6 +96,11 @@ async function processMessage({ topic, partition, message }) {
     
     // Emit kafka:message event
     kafkaEvents.emit('kafka:message', eventPayload);
+    
+    // Handle topic-specific processing
+    if (topic === 'order-created') {
+      await handleOrderCreated(messageValue);
+    }
     
     // Clear attempt count on successful processing
     processingAttempts.delete(messageKey);

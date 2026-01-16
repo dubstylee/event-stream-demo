@@ -1,0 +1,57 @@
+task_groups:
+  - name: Toast Component Implementation
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Form Validation Implementation
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Form Submission and Loading States
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Configuration Setup
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Product Generation Logic
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Random Review Chance Logic
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Order Processing Handler
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Consumer Handler Registration
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Server-Side Timestamp Addition
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Unit Tests for Product Generation
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Unit Tests for Review Chance Logic
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Integration Tests for Order Processing
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: Frontend Integration Tests
+    claude_code_subagent: task-implementer
+    standards:
+      - all
+  - name: End-to-End Verification
+    claude_code_subagent: task-verifier
+    standards:
+      - all

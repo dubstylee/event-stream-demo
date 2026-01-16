@@ -1,0 +1,9 @@
+{
+  "productGeneration": {
+    "productIdLength": 10,
+    "productIdPrefix": "product-"
+  },
+  "reviewChance": {
+    "probability": 0.3
+  }
+}

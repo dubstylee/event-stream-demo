@@ -140,8 +140,14 @@ function createApp() {
         );
       }
 
+      // Add server-generated timestamp to message
+      const messageWithTimestamp = {
+        ...message,
+        timestamp: Date.now(),
+      };
+
       // Produce to Kafka
-      await produce(topic, message);
+      await produce(topic, messageWithTimestamp);
 
       // Success response
       res.json({ success: true });

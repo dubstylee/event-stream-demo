@@ -3,6 +3,7 @@ import { useKafkaMessages, TOPICS } from "../hooks/useKafkaMessages";
 import ConnectionStatus from "./ConnectionStatus";
 import TopicWidget from "./TopicWidget";
 import OrderEntryForm from "./OrderEntryForm";
+import { useToast } from "./ToastContainer";
 
 /**
  * Dashboard provides the main application layout with real-time Kafka message display.
@@ -12,6 +13,7 @@ import OrderEntryForm from "./OrderEntryForm";
 function Dashboard() {
   const { connectionStatus, socket } = useSocket();
   const topicState = useKafkaMessages(socket);
+  const { ToastContainer } = useToast();
 
   return (
     <main className="min-h-screen bg-gray-100">

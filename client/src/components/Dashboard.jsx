@@ -3,6 +3,7 @@ import { useKafkaMessages, TOPICS } from "../hooks/useKafkaMessages";
 import ConnectionStatus from "./ConnectionStatus";
 import TopicWidget from "./TopicWidget";
 import OrderEntryForm from "./OrderEntryForm";
+import ProductsNeedingReview from "./ProductsNeedingReview";
 import { useToast } from "./ToastContainer";
 
 /**
@@ -35,7 +36,10 @@ function Dashboard() {
             <h2 id="order-section-heading" className="sr-only">
               Order Entry
             </h2>
-            <OrderEntryForm />
+            <div className="flex flex-col gap-6">
+              <OrderEntryForm />
+              <ProductsNeedingReview socket={socket} />
+            </div>
           </section>
 
           <section

@@ -399,6 +399,102 @@ describe('Kafka Consumer', () => {
     });
   });
 
+  describe('product-matched handler integration', () => {
+    let eachMessageHandler;
+
+    beforeEach(async () => {
+      // Capture the eachMessage handler
+      mockConsumerInstance.run.mockImplementation(({ eachMessage }) => {
+        eachMessageHandler = eachMessage;
+        return Promise.resolve();
+      });
+      
+      await initializeConsumers();
+    });
+
+    it('should call handleProductMatched when product-matched message received', async () => {
+      // Mock the handleProductMatched function
+      const { handleProductMatched } = await import('../product-matched-handler.js');
+      const handleProductMatchedSpy = vi.spyOn(
+        await import('../product-matched-handler.js'),
+        'handleProductMatched'
+      );
+      handleProductMatchedSpy.mockResolvedValue(undefined);
+
+      const messageData = {
+        productId: 'product-123',
+        orderId: 'order-456',
+        timestamp: Date.now()
+      };
+
+      await eachMessageHandler({
+        topic: 'product-matched',
+        partition: 0,
+        message: {
+          offset: '5',
+          value: Buffer.from(JSON.stringify(messageData))
+        }
+      });
+
+      expect(handleProductMatchedSpy).toHaveBeenCalledWith(messageData);
+      expect(handleProductMatchedSpy).toHaveBeenCalledTimes(1);
+
+      handleProductMatchedSpy.mockRestore();
+    });
+
+    it('should apply consumer retry logic to product-matched messages (3 attempts before DLQ)', async () => {
+      // Mock handleProductMatched to throw error
+      const { handleProductMatched } = await import('../product-matched-handler.js');
+      const handleProductMatchedSpy = vi.spyOn(
+        await import('../product-matched-handler.js'),
+        'handleProductMatched'
+      );
+      handleProductMatchedSpy.mockRejectedValue(new Error('Processing failed'));
+
+      const messageData = {
+        productId: 'product-error',
+        orderId: 'order-error',
+        timestamp: Date.now()
+      };
+
+      const messagePayload = {
+        topic: 'product-matched',
+        partition: 0,
+        message: {
+          offset: '10',
+          value: Buffer.from(JSON.stringify(messageData))
+        }
+      };
+
+      // First attempt
+      await eachMessageHandler(messagePayload);
+      expect(console.error).toHaveBeenCalledWith(
+        '[Kafka Consumer] Error processing message (attempt 1/3). Topic: product-matched, Error: Processing failed'
+      );
+
+      // Second attempt
+      await eachMessageHandler(messagePayload);
+      expect(console.error).toHaveBeenCalledWith(
+        '[Kafka Consumer] Error processing message (attempt 2/3). Topic: product-matched, Error: Processing failed'
+      );
+
+      // Third attempt - should send to DLQ
+      await eachMessageHandler(messagePayload);
+      expect(console.error).toHaveBeenCalledWith(
+        '[Kafka Consumer] Error processing message (attempt 3/3). Topic: product-matched, Error: Processing failed'
+      );
+      expect(mockProduce).toHaveBeenCalledWith(
+        'product-matched-dlq',
+        expect.objectContaining({
+          error: 'Processing failed',
+          attempts: 3
+        })
+      );
+
+      handleProductMatchedSpy.mockRestore();
+    });
+  });
+
   describe('disconnectConsumers', () => {
     it('should disconnect all consumers', async () => {
       await initializeConsumers();

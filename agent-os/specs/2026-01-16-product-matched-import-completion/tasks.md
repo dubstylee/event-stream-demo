@@ -92,19 +92,19 @@ This feature implements the final step of the order processing workflow by consu
 #### Task Group 3: Consumer Topic Handler Integration
 **Dependencies:** Task Group 2
 
-- [ ] 3.0 Complete consumer integration
-  - [ ] 3.1 Write 2 focused tests for consumer integration
+- [x] 3.0 Complete consumer integration
+  - [x] 3.1 Write 2 focused tests for consumer integration
     - Test consumer calls handleProductMatched when product-matched message received
     - Test consumer retry logic applies to product-matched messages (3 attempts before DLQ)
-  - [ ] 3.2 Import handler in consumer.js
+  - [x] 3.2 Import handler in consumer.js
     - Add import statement at top: `import { handleProductMatched } from './product-matched-handler.js';`
     - Place import with other handler imports (after order-handler import)
-  - [ ] 3.3 Add topic-specific handler in processMessage function
+  - [x] 3.3 Add topic-specific handler in processMessage function
     - Locate the existing `if (topic === 'order-created')` block in processMessage
     - Add `else if (topic === 'product-matched')` condition after it
     - Call `await handleProductMatched(messageValue)` in the new condition block
     - Follow exact pattern from order-created handler
-  - [ ] 3.4 Ensure consumer integration tests pass
+  - [x] 3.4 Ensure consumer integration tests pass
     - Run ONLY the 2 tests written in 3.1
     - Verify handler is invoked correctly by consumer
 

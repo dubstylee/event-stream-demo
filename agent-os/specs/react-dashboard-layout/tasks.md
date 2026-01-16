@@ -129,20 +129,20 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
 #### Task Group 5: Order Entry Form
 **Dependencies:** Task Group 1
 
-- [ ] 5.0 Complete OrderEntryForm component
-  - [ ] 5.1 Create OrderEntryForm component structure
+- [x] 5.0 Complete OrderEntryForm component
+  - [x] 5.1 Create OrderEntryForm component structure
     - Location: `src/components/OrderEntryForm.jsx`
     - Two input fields: Order ID (text), Product Count (number)
     - Submit button (non-functional per spec)
     - Use semantic HTML with form element
-  - [ ] 5.2 Add form labels and accessibility
+  - [x] 5.2 Add form labels and accessibility
     - Associate labels with inputs using htmlFor
     - Add appropriate input types and attributes
     - Ensure keyboard navigation works
-  - [ ] 5.3 Implement form event handling
+  - [x] 5.3 Implement form event handling
     - Prevent default form submission (preventDefault)
     - Manage local state for input values with useState
-  - [ ] 5.4 Style with Tailwind CSS
+  - [x] 5.4 Style with Tailwind CSS
     - Consistent input sizing and spacing
     - Clear visual hierarchy
     - Button styling (can appear disabled or inactive since non-functional)

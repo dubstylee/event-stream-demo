@@ -1,6 +1,11 @@
 import { generateProducts } from "./product-generator.js";
 import { filterProductsForReview } from "./review-chance.js";
 import { produce } from "./producer.js";
+import {
+  initializeOrder,
+  addPendingProduct,
+  addSuccessfulProduct,
+} from "./order-tracker.js";
 
 /**
  * Processes an order-created message
@@ -28,11 +33,29 @@ export async function handleOrderCreated(orderMessage) {
       `[Order Handler] Generated ${products.length} products for order ${orderId}`
     );
 
+    // Initialize order tracking
+    initializeOrder(orderId, products.length);
+
     // Filter products for review
     const { productsNeedingReview } = filterProductsForReview(products);
 
     console.log(
       `[Order Handler] ${productsNeedingReview.length} products need review for order ${orderId}`
+    );
+
+    // Track products needing review as pending
+    for (const productId of productsNeedingReview) {
+      addPendingProduct(orderId, productId);
+    }
+
+    // Calculate and track successful products (those that passed without review)
+    const successfulCount = products.length - productsNeedingReview.length;
+    for (let i = 0; i < successfulCount; i++) {
+      addSuccessfulProduct(orderId);
+    }
+
+    console.log(
+      `[Order Handler] Tracking initialized: ${successfulCount} successful, ${productsNeedingReview.length} pending review`
     );
 
     // Publish products needing review to product-needs-review topic

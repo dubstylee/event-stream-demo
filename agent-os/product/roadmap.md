@@ -10,7 +10,7 @@
 
 5. [x] Order Creation Flow — Implement the order entry form that publishes to order-created topic, with the consumer that generates N random product strings per order `M`
 
-6. [ ] Product Review Logic — Add random review chance logic to product generation, publishing to product-needs-review when flagged, and tracking pending products per order `M`
+6. [x] Product Review Logic — Add random review chance logic to product generation, publishing to product-needs-review when flagged, and tracking pending products per order `M`
 
 7. [ ] Products Needing Review List — Create the review list component that consumes product-needs-review messages, displays pending products, and handles click-to-approve actions `M`
 

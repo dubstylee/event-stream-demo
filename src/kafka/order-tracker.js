@@ -166,6 +166,14 @@ export function getAllOrders() {
 }
 
 /**
+ * Removes an order from tracking (called when order is complete)
+ * @param {string} orderId - The order identifier to remove
+ */
+export function deleteOrder(orderId) {
+  orderStore.delete(orderId);
+}
+
+/**
  * Resets all tracking state (for testing purposes only)
  * @private
  */

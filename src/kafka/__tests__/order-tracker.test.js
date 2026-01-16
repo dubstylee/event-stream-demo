@@ -7,6 +7,7 @@ import {
   getGlobalSuccessfulCount,
   getPendingProducts,
   getAllOrders,
+  deleteOrder,
   _resetState,
 } from "../order-tracker.js";
 
@@ -145,6 +146,48 @@ describe("Order Tracker Module", () => {
 
     it("should start at zero when no orders have been processed", () => {
       expect(getGlobalSuccessfulCount()).toBe(0);
+    });
+  });
+
+  describe("deleteOrder", () => {
+    it("should remove order from tracker", () => {
+      initializeOrder("order-123", 10);
+      addPendingProduct("order-123", "product-abc");
+      
+      // Verify order exists
+      expect(getOrderState("order-123")).not.toBeNull();
+      
+      // Delete order
+      deleteOrder("order-123");
+      
+      // Verify order no longer exists
+      expect(getOrderState("order-123")).toBeNull();
+    });
+
+    it("should handle non-existent orderId gracefully (no error)", () => {
+      // Calling deleteOrder on non-existent order should not throw
+      expect(() => {
+        deleteOrder("non-existent-order");
+      }).not.toThrow();
+    });
+
+    it("should prevent getOrderState from returning deleted order", () => {
+      initializeOrder("order-delete-test", 5);
+      addPendingProduct("order-delete-test", "product-1");
+      addSuccessfulProduct("order-delete-test");
+      
+      // Verify order has data
+      const stateBefore = getOrderState("order-delete-test");
+      expect(stateBefore.totalProducts).toBe(5);
+      expect(stateBefore.pendingProductIds).toHaveLength(1);
+      expect(stateBefore.successfulCount).toBe(1);
+      
+      // Delete order
+      deleteOrder("order-delete-test");
+      
+      // getOrderState should now return null
+      const stateAfter = getOrderState("order-delete-test");
+      expect(stateAfter).toBeNull();
     });
   });
 });

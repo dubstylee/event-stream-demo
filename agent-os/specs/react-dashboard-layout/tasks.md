@@ -98,22 +98,22 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
 #### Task Group 4: Topic Widget Component
 **Dependencies:** Task Group 2
 
-- [ ] 4.0 Complete TopicWidget component
-  - [ ] 4.1 Create TopicWidget component structure
+- [x] 4.0 Complete TopicWidget component
+  - [x] 4.1 Create TopicWidget component structure
     - Location: `src/components/TopicWidget.jsx`
     - Accept props: topicName, messageCount, messages
     - Display topic name as header
     - Display running message count
     - Display message log area
-  - [ ] 4.2 Implement message log display
+  - [x] 4.2 Implement message log display
     - Show messages in chronological order (newest at bottom)
     - Each entry displays: timestamp and message content
     - Use monospace font for message content readability
     - Fixed height container with overflow-y-auto
-  - [ ] 4.3 Implement auto-scroll behavior
+  - [x] 4.3 Implement auto-scroll behavior
     - Use useEffect to scroll to bottom when new messages arrive
     - Use useRef for scrollable container reference
-  - [ ] 4.4 Style with Tailwind CSS
+  - [x] 4.4 Style with Tailwind CSS
     - Card-style container with subtle border or shadow
     - Clear visual boundaries between widgets
     - Consistent spacing and typography

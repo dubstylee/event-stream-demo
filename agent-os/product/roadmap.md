@@ -6,7 +6,7 @@
 
 3. [x] Express API with WebSocket Integration — Set up Express server with Socket.io for real-time browser updates, including event emission when messages are consumed from Kafka `S`
 
-4. [ ] React Dashboard Layout — Build the main dashboard page with Vite and Tailwind CSS, including four topic widgets (message count + log) and the order entry form `M`
+4. [x] React Dashboard Layout — Build the main dashboard page with Vite and Tailwind CSS, including four topic widgets (message count + log) and the order entry form `M`
 
 5. [ ] Order Creation Flow — Implement the order entry form that publishes to order-created topic, with the consumer that generates N random product strings per order `M`
 

@@ -198,23 +198,23 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
 #### Task Group 7: Integration Verification
 **Dependencies:** Task Group 6
 
-- [ ] 7.0 Complete end-to-end verification
-  - [ ] 7.1 Verify full dashboard functionality
+- [x] 7.0 Complete end-to-end verification
+  - [x] 7.1 Verify full dashboard functionality
     - Start Express server on port 4000
     - Start Vite dev server
     - Confirm Socket.io connection indicator shows "Connected"
     - Confirm four topic widgets display with zero message counts
-  - [ ] 7.2 Verify real-time message display (if Kafka available)
+  - [x] 7.2 Verify real-time message display (if Kafka available)
     - Send test messages to Kafka topics
     - Confirm messages appear in correct widgets
     - Confirm message counts increment
     - Confirm auto-scroll works
-  - [ ] 7.3 Verify responsive layout
+  - [x] 7.3 Verify responsive layout
     - Test at mobile width (320px - 767px)
     - Test at tablet width (768px - 1023px)
     - Test at desktop width (1024px+)
     - Confirm layout adapts appropriately
-  - [ ] 7.4 Verify accessibility basics
+  - [x] 7.4 Verify accessibility basics
     - Confirm keyboard navigation works
     - Confirm form labels are associated
     - Confirm color contrast is sufficient

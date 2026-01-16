@@ -158,30 +158,30 @@ This spec implements a React dashboard with Vite and Tailwind CSS featuring a tw
 #### Task Group 6: Dashboard Page Layout
 **Dependencies:** Task Groups 3, 4, 5
 
-- [ ] 6.0 Complete Dashboard layout and integration
-  - [ ] 6.1 Create Dashboard component
+- [x] 6.0 Complete Dashboard layout and integration
+  - [x] 6.1 Create Dashboard component
     - Location: `src/components/Dashboard.jsx`
     - Integrate useSocket and useKafkaMessages hooks
     - Pass connection status to ConnectionStatus component
     - Pass topic data to four TopicWidget instances
     - Include OrderEntryForm in left column
-  - [ ] 6.2 Implement two-column layout
+  - [x] 6.2 Implement two-column layout
     - Left column: ~40% width for order form
     - Right column: ~60% width for topic widgets
     - Use Tailwind CSS flexbox or grid utilities
     - Four topic widgets stacked vertically in right column
-  - [ ] 6.3 Implement responsive design
+  - [x] 6.3 Implement responsive design
     - Mobile-first approach
     - Stack columns vertically on smaller screens (below 768px)
     - Side-by-side layout on desktop (768px and above)
-  - [ ] 6.4 Add semantic HTML structure
+  - [x] 6.4 Add semantic HTML structure
     - Use main element wrapping dashboard content
     - Use appropriate heading levels (h1-h6) in logical order
     - Ensure logical tab order for accessibility
-  - [ ] 6.5 Position ConnectionStatus indicator
+  - [x] 6.5 Position ConnectionStatus indicator
     - Place in header or prominent location
     - Ensure visibility at all times
-  - [ ] 6.6 Update App.jsx to render Dashboard
+  - [x] 6.6 Update App.jsx to render Dashboard
     - Import and render Dashboard component
     - Remove default Vite boilerplate content
 

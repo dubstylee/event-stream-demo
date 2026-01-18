@@ -12,9 +12,9 @@
 
 6. [x] Product Review Logic — Add random review chance logic to product generation, publishing to product-needs-review when flagged, and tracking pending products per order `M`
 
-7. [ ] Products Needing Review List — Create the review list component that consumes product-needs-review messages, displays pending products, and handles click-to-approve actions `M`
+7. [x] Products Needing Review List — Create the review list component that consumes product-needs-review messages, displays pending products, and handles click-to-approve actions `M`
 
-8. [ ] Product Matched and Import Completion — Implement product-matched publishing on approval, track remaining products per order, and publish import-requested when all products are processed `M`
+8. [x] Product Matched and Import Completion — Implement product-matched publishing on approval, track remaining products per order, and publish import-requested when all products are processed `M`
 
 > Notes
 >

@@ -16,7 +16,7 @@ export function useSocket() {
 
   const socket = useMemo(() => {
     return io(SOCKET_URL, {
-      autoConnect: true,
+      autoConnect: false,
       reconnection: true,
     });
   }, []);
@@ -45,6 +45,9 @@ export function useSocket() {
     socket.on("reconnect_failed", () => {
       setConnectionStatus("error");
     });
+
+    // Connect after event listeners are set up
+    socket.connect();
 
     return () => {
       socket.disconnect();
